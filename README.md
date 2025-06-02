@@ -19,29 +19,23 @@ By completing this lab, students will:
 - No, the server’s confidence is not always higher than the wand’s confidence. However, in most cases, it tends to be higher. This is likely because the cloud model is trained on a larger, more diverse dataset, potentially aggregated from multiple users, and benefits from more computational resources and complex model architectures. In contrast, the ESP32 uses a lightweight model optimized for embedded systems, which may have reduced accuracy on less common or noisy gestures.
 
 2. Sketch the data flow of this lab
-- [ESP32 (Magic Wand)] 
-      ↓ (Sensor data: x, y, z)
-[Local Inference on ESP32]
-      ↓
-Is confidence < threshold?
-      ↓                   ↓
-  Yes, send to cloud       No, use local prediction
-      ↓
-[Flask Web Server in Cloud]
-      ↓
-Cloud Prediction (gesture + confidence)
-      ↓
-ESP32 receives cloud response
-      ↓
-Actuate LED / Output to Serial Monitor
+graph TD
+    A[ESP32 (Magic Wand)] --> B{Local Inference on ESP32}
+    B -->|Confidence < Threshold| C[Send to Cloud (Flask Server)]
+    B -->|Confidence >= Threshold| D[Use Local Prediction]
+    C --> E[Cloud Prediction (Gesture + Confidence)]
+    E --> F[ESP32 Receives Cloud Response]
+    F --> G[Actuate LED / Output to Serial Monitor]
+    D --> G
+
 
 3. Analyze pros and cons of edge-first, fallback-to-server when uncertain
-- | Aspect                 | Pros                                                                     | Cons                                                       |
-| ---------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------- |
-| Connectivity           | Works offline most of the time, reduced cloud dependency                 | Needs internet for cloud offloading when confidence is low |
-| Latency                | Local inference is fast and low-latency                                  | Cloud inference introduces additional delay                |
-| Prediction Consistency | Edge reduces load on server, lower network usage                         | Results may vary between local and cloud models            |
-| Data Privacy           | Only low-confidence data sent to cloud, preserving privacy for most data | Some sensitive sensor data still sent to cloud             |
+| Aspect                 | Pros                                                                     | Cons                                                          |
+| ---------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| Connectivity           | Works offline most of the time, reduced cloud dependency                 | Requires internet for cloud offloading when confidence is low |
+| Latency                | Local inference is fast and low-latency                                  | Cloud inference introduces additional delay                   |
+| Prediction Consistency | Edge reduces load on server, lower network usage                         | Results may vary between local and cloud models               |
+| Data Privacy           | Only low-confidence data sent to cloud, preserving privacy for most data | Some sensitive sensor data still sent to cloud                |
 
 4. Name a strategy to mitigate at least one limitation
 - Mitigation Strategy:
