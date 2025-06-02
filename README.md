@@ -14,34 +14,24 @@ By completing this lab, students will:
 - Deploy model as a web app
 - Understand cloud-edge offloading
 
+## Screenshots
+
+1️⃣ ESP32 Serial Monitor Output
+![Alt Text](Screenshots/1.png)
+
+2️⃣ Model Training in Azure Notebook
+![Alt Text](Screenshots/2.png)
+
+3️⃣ Compute Instance Configuration in Azure
+![Alt Text](Screenshots/3.png)
+
 ## Discussion
  1.  Is server's confidence always higher than wand's confidence from your observations? What is your hypothetical reason for the observation?
 - No, the server’s confidence is not always higher than the wand’s confidence. However, in most cases, it tends to be higher. This is likely because the cloud model is trained on a larger, more diverse dataset, potentially aggregated from multiple users, and benefits from more computational resources and complex model architectures. In contrast, the ESP32 uses a lightweight model optimized for embedded systems, which may have reduced accuracy on less common or noisy gestures.
 
 2. Sketch the data flow of this lab
 
-ESP32 (Magic Wand)
-        |
-        v
- Local Inference on ESP32
-      /      \
-     /        \
-Confidence <  Confidence >=
-Threshold      Threshold
-    |             |
-    v             v
-Send to Cloud   Use Local Prediction
-(Flask Server)          |
-    |                   v
-    v             Actuate LED / Output to Serial Monitor
-Cloud Prediction
-(Gesture + Confidence)
-    |
-    v
-ESP32 Receives Cloud Response
-    |
-    v
-Actuate LED / Output to Serial Monitor
+![Alt Text](Screenshots/4.png)
 
 
 
