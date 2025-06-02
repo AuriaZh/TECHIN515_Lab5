@@ -20,13 +20,14 @@ By completing this lab, students will:
 
 2. Sketch the data flow of this lab
 graph TD
-    A[ESP32 (Magic Wand)] --> B{Local Inference on ESP32}
-    B -->|Confidence < Threshold| C[Send to Cloud (Flask Server)]
-    B -->|Confidence >= Threshold| D[Use Local Prediction]
-    C --> E[Cloud Prediction (Gesture + Confidence)]
-    E --> F[ESP32 Receives Cloud Response]
-    F --> G[Actuate LED / Output to Serial Monitor]
-    D --> G
+  A[ESP32 (Magic Wand)] --> B{Local Inference on ESP32}
+  B -->|Confidence < Threshold| C[Send to Cloud (Flask Server)]
+  B -->|Confidence >= Threshold| D[Use Local Prediction]
+  C --> E[Cloud Prediction (Gesture + Confidence)]
+  E --> F[ESP32 Receives Cloud Response]
+  F --> G[Actuate LED / Output to Serial Monitor]
+  D --> G
+
 
 
 3. Analyze pros and cons of edge-first, fallback-to-server when uncertain
